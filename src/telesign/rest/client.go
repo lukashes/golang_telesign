@@ -107,7 +107,7 @@ func (c *Client) Ping() (TSResponse, error) {
 }
 
 // Message sends a message to the target phone.
-// See https://developer.telesign.com/v2.0/docs/messaging-api for detailed API documentation.
+// See https://enterprise.telesign.com/api-reference/apis/sms-api for detailed API documentation.
 func (c *Client) Message(phone string, message string, messageType string, params map[string]string) (TSResponse, error) {
 	fields := url.Values{}
 	fields.Set("phone_number", phone)
@@ -118,4 +118,16 @@ func (c *Client) Message(phone string, message string, messageType string, param
 	}
 
 	return c.Post(MESSAGING_RESOURCE, fields)
+}
+
+// Retrieves the current status of the message.
+// See https://enterprise.telesign.com/api-reference/apis/sms-api for detailed API documentation.
+func (c *Client) MessageStatus(reference_id string, params map[string]string) TSResponse {
+	resource := STATUS_RESOURCE + reference_id
+	fields := url.Values{}
+	for key, value := range params {
+		fields.Add(key, value)
+	}
+
+	return Get(resource, fields)
 }
