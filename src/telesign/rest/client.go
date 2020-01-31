@@ -129,5 +129,5 @@ func (c *Client) MessageStatus(reference_id string, params map[string]string) TS
 		fields.Add(key, value)
 	}
 
-	return Get(resource, fields)
+	return c.Get(resource, fields)
 }
